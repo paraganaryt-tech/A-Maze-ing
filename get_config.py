@@ -34,6 +34,7 @@ def ft_get_config(file_name):
             "ENTRY": "", "EXIT": "",
             "OUTPUT_FILE": "", "PERFECT": ""
             }
+
         for item in item_list:
 
             if item[0] == "WIDTH":
@@ -53,6 +54,6 @@ def ft_get_config(file_name):
 
             elif item[0] == "PERFECT":
                 config_dic['PERFECT'] = item[1]
-
+        return config_dic
     except Exception:
         ft_exit("Sorry Somthing wrong")
