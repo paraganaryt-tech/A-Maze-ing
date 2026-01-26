@@ -32,7 +32,7 @@ def ft_get_config(file_name):
         config_dic = {
             "WIDTH": 0, "HEIGHT": 0,
             "ENTRY": "", "EXIT": "",
-            "OUTPUT_FILE": "", "PERFECT": ""
+            "OUTPUT_FILE": "", "PERFECT": True
             }
 
         for item in item_list:
@@ -50,10 +50,14 @@ def ft_get_config(file_name):
                 config_dic['EXIT'] = item[1]
 
             elif item[0] == "OUTPUT_FILE":
-                config_dic['OUTPUT_FILE'] = item[1]
+                config_dic['OUTPUT_FILE'] = item[1].lower()
 
             elif item[0] == "PERFECT":
-                config_dic['PERFECT'] = item[1]
+                if item[1] == "TRUE":
+                    config_dic['PERFECT'] = True
+                elif item[1] == "FALSE":
+                    config_dic['PERFECT'] = False
+
         return config_dic
     except Exception:
         ft_exit("Sorry Somthing wrong")
