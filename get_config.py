@@ -15,6 +15,7 @@ def ft_get_config(file_name):
         config_list = []
         for line in all_config.splitlines():
             if "#" not in line:
+
                 config_list.append(str(line).upper())
 
         item_list = []
@@ -38,16 +39,21 @@ def ft_get_config(file_name):
         for item in item_list:
 
             if item[0] == "WIDTH":
-                config_dic['WIDTH'] = item[1]
+                config_dic['WIDTH'] = int(item[1])
 
             elif item[0] == "HEIGHT":
-                config_dic['HEIGHT'] = item[1]
+                config_dic['HEIGHT'] = int(item[1])
 
             elif item[0] == "ENTRY":
-                config_dic['ENTRY'] = item[1]
+                config_dic['ENTRY'] = item[1].split(",")
+                config_dic['ENTRY'][0] = int(config_dic['ENTRY'][0])
+                config_dic['ENTRY'][1] = int(config_dic['ENTRY'][1])
 
             elif item[0] == "EXIT":
-                config_dic['EXIT'] = item[1]
+                config_dic['EXIT'] = item[1].split(",")
+                config_dic['EXIT'][0] = int(config_dic['EXIT'][0])
+                config_dic['EXIT'][1] = int(config_dic['EXIT'][1])
+
 
             elif item[0] == "OUTPUT_FILE":
                 config_dic['OUTPUT_FILE'] = item[1].lower()
