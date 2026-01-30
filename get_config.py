@@ -54,7 +54,6 @@ def ft_get_config(file_name):
                 config_dic['EXIT'][0] = int(config_dic['EXIT'][0])
                 config_dic['EXIT'][1] = int(config_dic['EXIT'][1])
 
-
             elif item[0] == "OUTPUT_FILE":
                 config_dic['OUTPUT_FILE'] = item[1].lower()
 
