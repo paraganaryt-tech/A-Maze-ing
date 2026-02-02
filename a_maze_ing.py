@@ -1,3 +1,4 @@
+import time
 import sys
 import os
 import random
@@ -25,7 +26,7 @@ def print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h):
     BLACK_BG = "\033[40m"
     WHITE_BG = "\033[47m"
     GREEN_BG = "\033[42m"
-    BLUE_BG = "\033[45m"
+    BLUE_BG = "\033[46m"
     RED_BG   = "\033[41m"
     RESET    = "\033[0m"
     for h in range(len(tmp_maze)):
@@ -91,7 +92,7 @@ def set_42_in_maze(is_visited, tmp_maze, width, height):
 
 
 
-def maze_generater(entry, tmp_maze, is_visited, width, height):
+def maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h, exit_w, exit_h):
     start_w = entry[0]
     start_h = entry[1]
 
@@ -131,6 +132,10 @@ def maze_generater(entry, tmp_maze, is_visited, width, height):
             is_visited[next_h][next_w] = True
 
             reminder.append((next_w, next_h))
+        os.system("clear")
+        print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h)
+        time.sleep(0.08)
+    
 
 def main():
     file_name = sys.argv[1]
@@ -145,7 +150,6 @@ def main():
     tmp_maze = create_tmp_maze(width, height)
     is_visited = visited_list(width, height)
     set_42_in_maze(is_visited, tmp_maze, width, height)
-    maze_generater(entry, tmp_maze, is_visited, width, height)
 
     entry_w = entry[0] * 2 + 1
     entry_h = entry[1] * 2 + 1
@@ -155,7 +159,8 @@ def main():
     tmp_maze[entry_h][entry_w] = " "
     tmp_maze[exit_h][exit_w] = " "
 
-    print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h)
+    maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h, exit_w, exit_h)
+
 
 
 main()
