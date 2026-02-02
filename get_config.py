@@ -33,7 +33,7 @@ def ft_get_config(file_name):
         config_dic = {
             "WIDTH": 0, "HEIGHT": 0,
             "ENTRY": "", "EXIT": "",
-            "OUTPUT_FILE": "", "PERFECT": True
+            "OUTPUT_FILE": "output_maze.txt", "PERFECT": True
             }
 
         for item in item_list:
@@ -54,7 +54,6 @@ def ft_get_config(file_name):
                 config_dic['EXIT'][0] = int(config_dic['EXIT'][0])
                 config_dic['EXIT'][1] = int(config_dic['EXIT'][1])
 
-
             elif item[0] == "OUTPUT_FILE":
                 config_dic['OUTPUT_FILE'] = item[1].lower()
 
@@ -63,7 +62,19 @@ def ft_get_config(file_name):
                     config_dic['PERFECT'] = True
                 elif item[1] == "FALSE":
                     config_dic['PERFECT'] = False
+                    
+        if config_dic["ENTRY"][0] < 0:
+            config_dic["ENTRY"][0] = 0
 
+        if config_dic["ENTRY"][1] < 0:
+            config_dic["ENTRY"][1] = 0
+
+        if config_dic["EXIT"][0] >= config_dic["WIDTH"]:
+            config_dic["EXIT"][0] = config_dic["WIDTH"] - 1
+
+        if config_dic["EXIT"][1] >= config_dic["HEIGHT"]:
+            config_dic["EXIT"][1] = config_dic["HEIGHT"] - 1
+    
         return config_dic
     except Exception:
         ft_exit("Sorry Somthing wrong")

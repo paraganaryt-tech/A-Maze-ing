@@ -1,2 +1,2 @@
 all:
-	python3 A-Maze-Ing.py config.txt
+	python3 a_maze_ing.py config.txt
