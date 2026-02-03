@@ -15,8 +15,6 @@ def open_path(place_w, place_h, next_w, next_h, tmp_maze):
     next_w = next_w * 2 + 1
     next_h = next_h * 2 + 1
 
-    tmp_maze[place_h][place_w] = " "
-
     tmp_maze[next_h][next_w] = " "
 
     tmp_maze[place_h + dh][place_w + dw] = " "
@@ -26,14 +24,14 @@ def print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h):
     BLACK_BG = "\033[40m"
     WHITE_BG = "\033[47m"
     GREEN_BG = "\033[42m"
-    BLUE_BG = "\033[46m"
+    BLUE_BG = "\033[45m"
     RED_BG   = "\033[41m"
     RESET    = "\033[0m"
     for h in range(len(tmp_maze)):
         maze_str = ""
         for w in range(len(tmp_maze[0])):
             if tmp_maze[h][w] == "#":
-                maze_str += f"{BLACK_BG}  {RESET}"
+                maze_str += f"{WHITE_BG}  {RESET}"
             elif tmp_maze[h][w] == "@":
                 maze_str += f"{BLUE_BG}  {RESET}"
             elif h == entry_h and w == entry_w:
@@ -41,7 +39,7 @@ def print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h):
             elif h == exit_h and w == exit_w:
                 maze_str += f"{RED_BG}  {RESET}"
             else:
-                maze_str += f"{WHITE_BG}  {RESET}"
+                maze_str += f"{BLACK_BG}  {RESET}"
         print(maze_str)
 
 
@@ -67,23 +65,23 @@ def visited_list(width, height):
 
 
 def set_42_in_maze(is_visited, tmp_maze, width, height):
-    is_visited[int(height / 2) - 2][int(width / 2) - 4] = True
-    is_visited[int(height / 2) - 1][int(width / 2) - 4] = True
-    is_visited[int(height / 2) - 0][int(width / 2) - 4] = True
+    is_visited[int(height / 2) - 2][int(width / 2) - 3] = True
+    is_visited[int(height / 2) - 1][int(width / 2) - 3] = True
     is_visited[int(height / 2) - 0][int(width / 2) - 3] = True
     is_visited[int(height / 2) - 0][int(width / 2) - 2] = True
-    is_visited[int(height / 2) + 1][int(width / 2) - 2] = True
-    is_visited[int(height / 2) + 2][int(width / 2) - 2] = True
+    is_visited[int(height / 2) - 0][int(width / 2) - 1] = True
+    is_visited[int(height / 2) + 1][int(width / 2) - 1] = True
+    is_visited[int(height / 2) + 2][int(width / 2) - 1] = True
 
-    is_visited[int(height / 2) - 2][int(width / 2) - 0] = True
     is_visited[int(height / 2) - 2][int(width / 2) + 1] = True
-    is_visited[int(height / 2) - 1][int(width / 2) + 1] = True
+    is_visited[int(height / 2) - 2][int(width / 2) + 2] = True
+    is_visited[int(height / 2) - 1][int(width / 2) + 2] = True
+    is_visited[int(height / 2) - 0][int(width / 2) + 2] = True
+    is_visited[int(height / 2) - 0][int(width / 2) + 2] = True
     is_visited[int(height / 2) - 0][int(width / 2) + 1] = True
-    is_visited[int(height / 2) - 0][int(width / 2) + 1] = True
-    is_visited[int(height / 2) - 0][int(width / 2) - 0] = True
-    is_visited[int(height / 2) + 1][int(width / 2) - 0] = True
-    is_visited[int(height / 2) + 2][int(width / 2) - 0] = True
-    is_visited[int(height / 2) + 2][int(width / 2) + 1 ] = True
+    is_visited[int(height / 2) + 1][int(width / 2) + 1] = True
+    is_visited[int(height / 2) + 2][int(width / 2) + 1] = True
+    is_visited[int(height / 2) + 2][int(width / 2) + 2] = True
 
     for y in range(len(is_visited)):
         for x in range(len(is_visited[0])):
@@ -101,7 +99,6 @@ def maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h,
     reminder = []
     reminder.append((start_w, start_h))
 
-    tmp_maze[start_h * 2 + 1][start_w * 2 +1] = " "
 
     direction = [
         (1, 0),
@@ -132,12 +129,14 @@ def maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h,
             is_visited[next_h][next_w] = True
 
             reminder.append((next_w, next_h))
-        os.system("clear")
-        print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h)
-        time.sleep(0.08)
+
+            os.system("clear")
+            print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h)
+            time.sleep(0.05)
+
     
 
-def main():
+def amazeing_dfs():
     file_name = sys.argv[1]
     config = get_config.ft_get_config(file_name)
 
@@ -150,6 +149,7 @@ def main():
     tmp_maze = create_tmp_maze(width, height)
     is_visited = visited_list(width, height)
     set_42_in_maze(is_visited, tmp_maze, width, height)
+    print(tmp_maze)
 
     entry_w = entry[0] * 2 + 1
     entry_h = entry[1] * 2 + 1
@@ -157,11 +157,10 @@ def main():
     exit_h = exit_p[1] * 2 + 1
 
     tmp_maze[entry_h][entry_w] = " "
-    tmp_maze[exit_h][exit_w] = " "
+    tmp_maze[exit_h][exit_w] = "  "
 
     maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h, exit_w, exit_h)
 
-
-
-main()
-os.system("rm -rf __pycache__")
+if __name__ == "__main__":
+    amazeing_dfs()
+    os.system("rm -rf __pycache__")
