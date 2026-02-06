@@ -1,7 +1,7 @@
 # Maze configuration
-WIDTH=8
-HEIGHT=8
+WIDTH=20
+HEIGHT=20
 ENTRY=0,0
-EXIT=90,90
+EXIT=60,60
 OUTPUT_FILE=output_maze.txt
 PERFECT=True

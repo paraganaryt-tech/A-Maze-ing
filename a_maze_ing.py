@@ -21,29 +21,46 @@ def open_path(place_w, place_h, next_w, next_h, tmp_maze):
 
 
 def print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h):
-    BLACK_BG = "\033[40m"
-    WHITE_BG = "\033[47m"
-    GREEN_BG = "\033[42m"
-    BLUE_BG = "\033[45m"
-    RED_BG   = "\033[41m"
-    RESET    = "\033[0m"
+    colors = {
+    "BLACK_BG": "\033[40m",
+    "WHITE_BG": "\033[47m",
+    "GREEN_BG": "\033[42m",
+    "BL_BG": "\033[44m",
+    "BLUE_BG": "\033[45m",
+    "RED_BG": "\033[41m"}
+
+    RESET = "\033[0m"
     for h in range(len(tmp_maze)):
         maze_str = ""
         for w in range(len(tmp_maze[0])):
             if tmp_maze[h][w] == "#":
-                maze_str += f"{WHITE_BG}  {RESET}"
+                maze_str += f'{colors["BLACK_BG"]}  {RESET}'
             elif tmp_maze[h][w] == "@":
-                maze_str += f"{BLUE_BG}  {RESET}"
+                maze_str += f'{colors["BLUE_BG"]}  {RESET}'
             elif h == entry_h and w == entry_w:
-                maze_str += f"{GREEN_BG}  {RESET}"
+                maze_str += f'{colors["GREEN_BG"]}  {RESET}'
             elif h == exit_h and w == exit_w:
-                maze_str += f"{RED_BG}  {RESET}"
+                    maze_str += f'{colors["RED_BG"]}  {RESET}'
             else:
-                maze_str += f"{BLACK_BG}  {RESET}"
+                maze_str += f'{colors["WHITE_BG"]}  {RESET}'
         print(maze_str)
 
+def print_intro(tmp_maze):
+    colors = {
+    "BLACK_BG": "\033[40m",
+    "AMM_BG": "\033[45m"}
 
-def create_tmp_maze(width, height):
+    RESET = "\033[0m"
+    for h in range(len(tmp_maze)):
+        maze_str = ""
+        for w in range(len(tmp_maze[0])):
+            if  tmp_maze[h][w] == "#":
+                maze_str += f'{colors["BLACK_BG"]}  {RESET}'
+            else:
+                maze_str += f'{colors["AMM_BG"]}  {RESET}'
+        print(maze_str)
+
+def create_tmp_maze(width, height) -> list:
     w = width * 2 + 1
     h = height * 2 + 1
 
@@ -52,10 +69,13 @@ def create_tmp_maze(width, height):
         maze.append([])
         for x in range(w):
             maze[y].append("#")
+        os.system("clear")
+        print_intro(maze)
+        time.sleep(0.03)
 
     return maze
 
-def visited_list(width, height):
+def visited_list(width, height) -> list:
     visited = []
     for y in range(height):
         visited.append([])
@@ -64,7 +84,7 @@ def visited_list(width, height):
     return visited
 
 
-def set_42_in_maze(is_visited, tmp_maze, width, height):
+def set_42_in_maze(is_visited, tmp_maze, width, height) -> None:
     is_visited[int(height / 2) - 2][int(width / 2) - 3] = True
     is_visited[int(height / 2) - 1][int(width / 2) - 3] = True
     is_visited[int(height / 2) - 0][int(width / 2) - 3] = True
@@ -85,12 +105,17 @@ def set_42_in_maze(is_visited, tmp_maze, width, height):
 
     for y in range(len(is_visited)):
         for x in range(len(is_visited[0])):
+
             if is_visited[y][x] == True:
+            
                 tmp_maze[y * 2 + 1][x * 2 + 1] = "@"
+                
+                os.system("clear")
+                print_intro(tmp_maze)
+                time.sleep(0.08)
 
 
-
-def maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h, exit_w, exit_h):
+def maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h, exit_w, exit_h) -> None:
     start_w = entry[0]
     start_h = entry[1]
 
@@ -132,11 +157,11 @@ def maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h,
 
             os.system("clear")
             print_maze(tmp_maze, entry_w, entry_h, exit_w, exit_h)
-            time.sleep(0.05)
+            time.sleep(0.07)
 
     
 
-def amazeing_dfs():
+def amazeing_dfs() -> None:
     file_name = sys.argv[1]
     config = get_config.ft_get_config(file_name)
 
@@ -149,18 +174,47 @@ def amazeing_dfs():
     tmp_maze = create_tmp_maze(width, height)
     is_visited = visited_list(width, height)
     set_42_in_maze(is_visited, tmp_maze, width, height)
-    print(tmp_maze)
+
 
     entry_w = entry[0] * 2 + 1
     entry_h = entry[1] * 2 + 1
     exit_w = exit_p[0] * 2 + 1
     exit_h = exit_p[1] * 2 + 1
 
-    tmp_maze[entry_h][entry_w] = " "
-    tmp_maze[exit_h][exit_w] = "  "
+    try:
+        if tmp_maze[entry_h][entry_w] == "@":
+            raise ValueError("Is in 42 area")
+        if tmp_maze[exit_h][exit_w] == "@":
+            raise ValueError("Is in 42 area")
+
+        tmp_maze[entry_h][entry_w] = " "
+        # tmp_maze[exit_h][exit_w] = " "
+
+    except ValueError as e:
+        print(e)
 
     maze_generater(entry, tmp_maze, is_visited, width, height, entry_w, entry_h, exit_w, exit_h)
 
+def ft_intro() -> None:
+    os.system("clear")
+    print("\n\n\n\n\n")
+    print_list = [
+        "    █████╗    ███╗   ███╗ █████╗ ███████╗███████╗   ██╗███╗   ██╗ ██████╗ ",
+        "   ██╔══██╗   ████╗ ████║██╔══██╗╚══███╔╝██╔════╝   ██║████╗  ██║██╔════╝ ",
+        "   ███████║   ██╔████╔██║███████║  ███╔╝ █████╗     ██║██╔██╗ ██║██║  ███╗",
+        "   ██╔══██║   ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝     ██║██║╚██╗██║██║   ██║",
+        "   ██║  ██║   ██║ ╚═╝ ██║██║  ██║███████╗███████╗   ██║██║ ╚████║╚██████╔╝",
+        "   ╚═╝  ╚═╝   ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝ "
+    ]
+    for s in print_list:
+        print(s)
+        time.sleep(0.08)
+    print("\n\n\n\n\n")
+    time.sleep(0.08)
+
+    input("Run ==>")
+
 if __name__ == "__main__":
+    ft_intro()
     amazeing_dfs()
     os.system("rm -rf __pycache__")
