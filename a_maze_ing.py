@@ -86,6 +86,7 @@ def visited_list(width, height) -> list:
 
 def set_42_in_maze(is_visited, tmp_maze, width, height) -> None:
     is_visited[int(height / 2) - 2][int(width / 2) - 3] = True
+    is_visited[int(height / 2) - 2][int(width / 2) - 3] = True
     is_visited[int(height / 2) - 1][int(width / 2) - 3] = True
     is_visited[int(height / 2) - 0][int(width / 2) - 3] = True
     is_visited[int(height / 2) - 0][int(width / 2) - 2] = True
@@ -108,7 +109,7 @@ def set_42_in_maze(is_visited, tmp_maze, width, height) -> None:
 
             if is_visited[y][x] == True:
             
-                tmp_maze[y * 2 + 1][x * 2 + 1] = "@"
+                tmp_maze[y * 2 + 1][x * 2 + 1] = "@"                
                 
                 os.system("clear")
                 print_intro(tmp_maze)
@@ -188,7 +189,6 @@ def amazeing_dfs() -> None:
             raise ValueError("Is in 42 area")
 
         tmp_maze[entry_h][entry_w] = " "
-        # tmp_maze[exit_h][exit_w] = " "
 
     except ValueError as e:
         print(e)
@@ -204,7 +204,8 @@ def ft_intro() -> None:
         "   ███████║   ██╔████╔██║███████║  ███╔╝ █████╗     ██║██╔██╗ ██║██║  ███╗",
         "   ██╔══██║   ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝     ██║██║╚██╗██║██║   ██║",
         "   ██║  ██║   ██║ ╚═╝ ██║██║  ██║███████╗███████╗   ██║██║ ╚████║╚██████╔╝",
-        "   ╚═╝  ╚═╝   ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝ "
+        "   ╚═╝  ╚═╝   ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝ ",
+        "                                                    By: @nel-adao, @mjabri"
     ]
     for s in print_list:
         print(s)
