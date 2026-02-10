@@ -15,66 +15,72 @@ def ft_get_config(file_name):
         config_list = []
         for line in all_config.splitlines():
             if "#" not in line:
-
-                config_list.append(str(line).upper())
+                config_list.append(str(line))
 
         item_list = []
         i = 0
-
         for item in config_list:
             item_list.append(item.split("="))
             try:
-                item_list[i][0] = item_list[i][0].strip(" ")
+                item_list[i][0] = item_list[i][0].upper().strip(" ")
                 item_list[i][1] = item_list[i][1].strip(" ")
             except Exception:
                 ft_exit("Less Informations ")
             i += 1
 
-        config_dic = {
+        c_dic = {
             "WIDTH": 0, "HEIGHT": 0,
             "ENTRY": "", "EXIT": "",
             "OUTPUT_FILE": "output_maze.txt", "PERFECT": True
             }
 
+        validation_list = []
         for item in item_list:
 
             if item[0] == "WIDTH":
-                config_dic['WIDTH'] = int(item[1])
+                c_dic['WIDTH'] = int(item[1])
+                validation_list.append("WIDTH")
 
             elif item[0] == "HEIGHT":
-                config_dic['HEIGHT'] = int(item[1])
+                c_dic['HEIGHT'] = int(item[1])
+                validation_list.append("HEIGHT")
 
             elif item[0] == "ENTRY":
-                config_dic['ENTRY'] = item[1].split(",")
-                config_dic['ENTRY'][0] = int(config_dic['ENTRY'][0])
-                config_dic['ENTRY'][1] = int(config_dic['ENTRY'][1])
+                c_dic['ENTRY'] = item[1].split(",")
+                c_dic['ENTRY'][0] = int(c_dic['ENTRY'][0])
+                c_dic['ENTRY'][1] = int(c_dic['ENTRY'][1])
+                validation_list.append("ENTRY")
 
             elif item[0] == "EXIT":
-                config_dic['EXIT'] = item[1].split(",")
-                config_dic['EXIT'][0] = int(config_dic['EXIT'][0])
-                config_dic['EXIT'][1] = int(config_dic['EXIT'][1])
+                c_dic['EXIT'] = item[1].split(",")
+                c_dic['EXIT'][0] = int(c_dic['EXIT'][0])
+                c_dic['EXIT'][1] = int(c_dic['EXIT'][1])
+                validation_list.append("EXIT")
 
             elif item[0] == "OUTPUT_FILE":
-                config_dic['OUTPUT_FILE'] = item[1].lower()
+                c_dic['OUTPUT_FILE'] = item[1].lower()
+                validation_list.append("OUTPUT_FILE")
 
             elif item[0] == "PERFECT":
+                validation_list.append("PERFECT")
                 if item[1] == "TRUE":
-                    config_dic['PERFECT'] = True
+                    c_dic['PERFECT'] = True
                 elif item[1] == "FALSE":
-                    config_dic['PERFECT'] = False
-                    
-        if config_dic["ENTRY"][0] < 0:
-            config_dic["ENTRY"][0] = 0
+                    c_dic['PERFECT'] = False
 
-        if config_dic["ENTRY"][1] < 0:
-            config_dic["ENTRY"][1] = 0
+        
+        if c_dic["ENTRY"][0] < 0:
+            c_dic["ENTRY"][0] = 0
 
-        if config_dic["EXIT"][0] >= config_dic["WIDTH"]:
-            config_dic["EXIT"][0] = config_dic["WIDTH"] - 1
+        if c_dic["ENTRY"][1] < 0:
+            c_dic["ENTRY"][1] = 0
 
-        if config_dic["EXIT"][1] >= config_dic["HEIGHT"]:
-            config_dic["EXIT"][1] = config_dic["HEIGHT"] - 1
-    
-        return config_dic
+        if c_dic["EXIT"][0] >= c_dic["WIDTH"]:
+            c_dic["EXIT"][0] = c_dic["WIDTH"] - 1
+
+        if c_dic["EXIT"][1] >= c_dic["HEIGHT"]:
+            c_dic["EXIT"][1] = c_dic["HEIGHT"] - 1
+
+        return c_dic
     except Exception:
         ft_exit("Sorry Somthing wrong")
