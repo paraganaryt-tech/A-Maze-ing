@@ -41,7 +41,7 @@ class MazeGenerator():
             maze_str = ""
             for w in range(len(tmp_maze[0])):
                 if tmp_maze[h][w] == "#":
-                    maze_str += f'{colors["BLACK_BG"]}  {RESET}'
+                    maze_str += f'{colors["WHITE_BG"]}  {RESET}'
                 elif tmp_maze[h][w] == "@":
                     maze_str += f'{colors["BLUE_BG"]}  {RESET}'
                 elif h == self.entry[1]*2+1 and w == self.entry[1]*2+1:
@@ -49,7 +49,7 @@ class MazeGenerator():
                 elif h == self.exit_p[1]*2+1 and w == self.exit_p[1]*2+1:
                         maze_str += f'{colors["RED_BG"]}  {RESET}'
                 else:
-                    maze_str += f'{colors["WHITE_BG"]}  {RESET}'
+                    maze_str += f'{colors["BLACK_BG"]}  {RESET}'
             print(maze_str)
 
     def print_intro(self, tmp_maze):
@@ -125,9 +125,7 @@ class MazeGenerator():
         start_h = self.entry[1]
 
         is_visited[start_h][start_w] = True
-
-        reminder = []
-        reminder.append((start_w, start_h))
+        walls = []
 
         direction = [
             (1, 0),
@@ -135,33 +133,25 @@ class MazeGenerator():
             (0, 1),
             (0, -1)
         ]
-
-        while len(reminder) > 0:
-            place_w, place_h = reminder.pop()
-
-            dir_n = []
-            for nw, nh in direction:
-                nw += place_w
-                nh += place_h
-
-                if 0 <= nw < self.width and 0 <= nh < self.height:
-                    if not is_visited[nh][nw]:
-                        dir_n.append((nw, nh))
-
-            if len(dir_n) > 0:
-                reminder.append((place_w, place_h))
-
-                next_w, next_h = random.choice(dir_n)
-
-                self.open_path(place_w, place_h, next_w, next_h, tmp_maze)
-
-                is_visited[next_h][next_w] = True
-
-                reminder.append((next_w, next_h))
-
-                os.system("clear")
-                self.print_maze(tmp_maze)
-                time.sleep(0.07)
+        for dx, dy in direction:
+            nx, ny = start_w + dx, start_h + dy
+            if 0 <= nx < self.width and 0 <= ny < self.height:
+                walls.append((start_w, start_h, nx, ny))
+        while len(walls) > 0:
+            rand_ind = random.randint(0, len(walls) - 1)
+            place_w, place_h, next_w, next_h = walls.pop(rand_ind)
+            if is_visited[next_h][next_w]:
+                continue
+            self.open_path(place_w, place_h, next_w, next_h, tmp_maze)
+            is_visited[next_h][next_w] = True
+            for dx, dy in direction:
+                nnx, nny = next_w + dx, next_h + dy
+                if 0 <= nnx < self.width and 0 <= nny < self.height:
+                    if not is_visited[nny][nnx]:
+                        walls.append((next_w, next_h, nnx, nny))
+            os.system("clear")
+            self.print_maze(tmp_maze)
+            time.sleep(0.056)
 
     def ft_output_file(self, tmp_maze: list,):
         o_list = [[15 for h in range(self.height)] for w in range(self.width)]
