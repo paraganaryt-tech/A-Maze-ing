@@ -14,8 +14,11 @@ def ft_get_config(file_name):
 
         config_list = []
         for line in all_config.splitlines():
-            if "#" not in line:
-                config_list.append(str(line))
+            if "#" not in line and "=" in line:
+                config_list.append(line)
+            else:
+                tmp_spt = line.split("#")
+                config_list.append(tmp_spt[0])
 
         item_list = []
         i = 0
@@ -25,7 +28,7 @@ def ft_get_config(file_name):
                 item_list[i][0] = item_list[i][0].upper().strip(" ")
                 item_list[i][1] = item_list[i][1].strip(" ")
             except Exception:
-                ft_exit("Less Informations ")
+                continue
             i += 1
 
         c_dic = {
@@ -58,7 +61,7 @@ def ft_get_config(file_name):
                 validation_list.append("EXIT")
 
             elif item[0] == "OUTPUT_FILE":
-                c_dic['OUTPUT_FILE'] = item[1].lower()
+                c_dic['OUTPUT_FILE'] = item[1]
                 validation_list.append("OUTPUT_FILE")
 
             elif item[0] == "PERFECT":
@@ -68,7 +71,6 @@ def ft_get_config(file_name):
                 elif item[1] == "FALSE":
                     c_dic['PERFECT'] = False
 
-        
         if c_dic["ENTRY"][0] < 0:
             c_dic["ENTRY"][0] = 0
 
@@ -81,6 +83,9 @@ def ft_get_config(file_name):
         if c_dic["EXIT"][1] >= c_dic["HEIGHT"]:
             c_dic["EXIT"][1] = c_dic["HEIGHT"] - 1
 
+        if c_dic["WIDTH"] <= 0 or c_dic["HEIGHT"] <= 0:
+            raise ValueError
+
         return c_dic
-    except Exception:
-        ft_exit("Sorry Somthing wrong")
+    except Exception as e:
+        ft_exit(f"Sorry Somthing wrong pleas check your config :{e}")
