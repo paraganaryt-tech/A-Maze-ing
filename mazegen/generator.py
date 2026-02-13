@@ -158,10 +158,8 @@ class MazeGenerator():
                 rd -= 1
             else:
                 rd += 1
-        print(rd)
         while i < len(tmp_maze[rd]):
             if tmp_maze[rd][i] == "#":
-                print(i)
                 tmp_maze[rd][i] = " "
                 break
             i += 1
@@ -311,33 +309,22 @@ class MazeGenerator():
         self.ft_output_file(tmp_maze)
 
     def ft_output_file(self, tmp_maze: list) -> None:
-        o_list: list = [[15 for h in range(self.width)] for w in range(self.height)]
+        o_list: list = [[15 for h in range(self.width)]
+                        for w in range(self.height)]
         N = 1
         E = 2
         S = 4
         W = 8
         for h in range(self.height):
             for w in range(self.width):
-                try:
-                    if tmp_maze[h*2+1][w*2+2] == " ":
-                        o_list[h][w] -= E
-                except Exception:
-                    continue
-                try:
-                    if tmp_maze[h*2+1][w*2] == " ":
-                        o_list[h][w] -= W
-                except Exception:
-                    continue
-                try:
-                    if tmp_maze[h*2][w*2+1] == " ":
-                        o_list[h][w] -= N
-                except Exception:
-                    continue
-                try:
-                    if tmp_maze[h*2+2][w*2+1] == " ":
-                        o_list[h][w] -= S
-                except Exception:
-                    continue
+                if tmp_maze[h*2+1][w*2+2] == " ":
+                    o_list[h][w] -= E
+                if tmp_maze[h*2+1][w*2] == " ":
+                    o_list[h][w] -= W
+                if tmp_maze[h*2][w*2+1] == " ":
+                    o_list[h][w] -= N
+                if tmp_maze[h*2+2][w*2+1] == " ":
+                    o_list[h][w] -= S
 
         hex_list = ["A", "B", "C", "D", "E", "F"]
         with open(self.out_file, "w") as o_file:
@@ -371,6 +358,7 @@ class MazeGenerator():
 
         except ValueError as e:
             print(e)
+        random.seed(42)
         if what == 1:
             self.maze_generater_dfs(tmp_maze, is_visited)
         else:
@@ -437,9 +425,9 @@ class MazeGenerator():
                     maze_str += f'{for_wall}  {RESET}'
                 elif tmp_maze[h][w] == "@":
                     maze_str += f'{for_42}  {RESET}'
-                elif h == self.entry[1]*2+1 and w == self.entry[1]*2+1:
+                elif h == self.entry[0]*2+1 and w == self.entry[1]*2+1:
                     maze_str += f'{GREEN_BG}  {RESET}'
-                elif h == self.exit_p[1]*2+1 and w == self.exit_p[1]*2+1:
+                elif h == self.exit_p[0]*2+1 and w == self.exit_p[1]*2+1:
                     maze_str += f'{RED_BG}  {RESET}'
                 else:
                     maze_str += f'{for_path}  {RESET}'
