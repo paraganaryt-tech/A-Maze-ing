@@ -11,6 +11,7 @@ if __name__ == "__main__":
         exit()
 
     config = mazegen.ft_get_config(file_name)
+    print(config)
     maze = mazegen.MazeGenerator(config)
     tmp_maze = maze.ft_run()
 
@@ -31,21 +32,12 @@ if __name__ == "__main__":
 
         if choice == 1:
             os.system("clear")
-            maze.amazing_gen(0)
+            maze.amazing_gen(1)
         elif choice == 2:
             os.system("clear")
-            print("Path")
-            # dakhel l fucntion dial l path hna ligadi
-            # thadha chof labgiti tgadha f class gadha
-            # lamabgitich gadha f function lmhm lrah
-            # l 2d arry dial lmaze li b # o " " rah smytha:
-            # maze.maze_base
+            maze.test_path_blue(maze.maze_base)
         elif choice == 3:
             os.system("clear")
             maze.change_colors(maze.maze_base)
         else:
             break
-
-# rah gadi lflake o kolchi ol interface o lpakages rah msayb
-# anchof wach ba9i khasi yzid ytgad ola la b9a gir dakchi
-# dlinsstalation b toml o lpath dialk sf ol makefile

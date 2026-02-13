@@ -66,9 +66,9 @@ def ft_get_config(file_name):
 
             elif item[0] == "PERFECT":
                 validation_list.append("PERFECT")
-                if item[1] == "TRUE":
+                if item[1].upper() == "TRUE":
                     c_dic['PERFECT'] = True
-                elif item[1] == "FALSE":
+                elif item[1].upper() == "FALSE":
                     c_dic['PERFECT'] = False
 
         if c_dic["ENTRY"][0] < 0:
@@ -77,11 +77,11 @@ def ft_get_config(file_name):
         if c_dic["ENTRY"][1] < 0:
             c_dic["ENTRY"][1] = 0
 
-        if c_dic["EXIT"][0] >= c_dic["WIDTH"]:
-            c_dic["EXIT"][0] = c_dic["WIDTH"] - 1
+        if c_dic["EXIT"][1] >= c_dic["WIDTH"]:
+            c_dic["EXIT"][1] = c_dic["WIDTH"] - 1
 
-        if c_dic["EXIT"][1] >= c_dic["HEIGHT"]:
-            c_dic["EXIT"][1] = c_dic["HEIGHT"] - 1
+        if c_dic["EXIT"][0] >= c_dic["HEIGHT"]:
+            c_dic["EXIT"][0] = c_dic["HEIGHT"] - 1
 
         if c_dic["WIDTH"] <= 0 or c_dic["HEIGHT"] <= 0:
             raise ValueError
