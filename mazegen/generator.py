@@ -11,6 +11,8 @@ class MazeGenerator():
         self.exit_p = config['EXIT']
         self.out_file = config['OUTPUT_FILE']
         self.perfect = config['PERFECT']
+        self.seed = config["SEED"]
+        self.algo = config["ALGO"]
 
     def test_path_blue(self, tmp_maze):
         start_w, start_h = self.entry[0], self.entry[1]
@@ -53,9 +55,9 @@ class MazeGenerator():
                     else:
                         maze_str += f'{colors["WHITE_BG"]}  {RESET}'
                 print(maze_str)
-            time.sleep(0.03)
+            time.sleep(0.05)
             if h == end_h * 2 + 1 and w == end_w * 2 + 1:
-                time.sleep(1)
+                # time.sleep(1)
                 break
             directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
             for dh, dw in directions:
@@ -195,7 +197,7 @@ class MazeGenerator():
 
                         os.system("clear")
                         self.print_intro(tmp_maze)
-                        time.sleep(0.08)
+                        time.sleep(0.05)
                 except BaseException:
                     while 1:
                         ex = input("you want to exit ? (y/n): ")
@@ -294,7 +296,7 @@ class MazeGenerator():
                             walls.append((next_w, next_h, nnx, nny))
                 os.system("clear")
                 self.print_maze(tmp_maze)
-                time.sleep(0.00004)
+                time.sleep(0.04)
             except BaseException:
                 while 1:
                     ex = input("you want to exit ? (y/n): ")
@@ -304,6 +306,7 @@ class MazeGenerator():
                         break
                 continue
         if self.perfect:
+            os.system("clear")
             self.perfect_path(tmp_maze)
             self.print_maze(tmp_maze)
         self.ft_output_file(tmp_maze)
@@ -358,8 +361,9 @@ class MazeGenerator():
 
         except ValueError as e:
             print(e)
-        random.seed(42)
-        if what == 1:
+        if self.seed:
+            random.seed(1337)
+        if self.algo:
             self.maze_generater_dfs(tmp_maze, is_visited)
         else:
             self.maze_generater_prim(tmp_maze, is_visited)
@@ -389,9 +393,9 @@ class MazeGenerator():
 
         for s in print_list:
             print(s)
-            time.sleep(0.08)
+            time.sleep(0.05)
         print("\n\n\n\n\n")
-        time.sleep(0.08)
+        time.sleep(0.05)
 
         input("Run ==>")
         self.amazing_gen(1)

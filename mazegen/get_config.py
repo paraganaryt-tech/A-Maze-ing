@@ -32,9 +32,10 @@ def ft_get_config(file_name):
             i += 1
 
         c_dic = {
-            "WIDTH": 0, "HEIGHT": 0,
-            "ENTRY": "", "EXIT": "",
-            "OUTPUT_FILE": "output_maze.txt", "PERFECT": True
+            "WIDTH": 20, "HEIGHT": 20,
+            "ENTRY": [0, 0], "EXIT": [19,19],
+            "OUTPUT_FILE": "output_maze.txt", "PERFECT": True,
+            "SEED": False, "ALGO": 1
             }
 
         validation_list = []
@@ -70,6 +71,14 @@ def ft_get_config(file_name):
                     c_dic['PERFECT'] = True
                 elif item[1].upper() == "FALSE":
                     c_dic['PERFECT'] = False
+
+            elif item[0] == "SEED":
+                if item[1].upper() == "TRUE":
+                    c_dic["SEED"] = True
+
+            elif item[0] == "ALGO":
+                if item[1].upper() == "PRIM":
+                    c_dic["ALGO"] = 0
 
         if c_dic["ENTRY"][0] < 0:
             c_dic["ENTRY"][0] = 0
