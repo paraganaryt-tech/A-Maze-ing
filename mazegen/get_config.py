@@ -33,7 +33,7 @@ def ft_get_config(file_name):
 
         c_dic = {
             "WIDTH": 20, "HEIGHT": 20,
-            "ENTRY": [0, 0], "EXIT": [19,19],
+            "ENTRY": [0, 0], "EXIT": [20, 20],
             "OUTPUT_FILE": "output_maze.txt", "PERFECT": True,
             "SEED": False, "ALGO": 1
             }

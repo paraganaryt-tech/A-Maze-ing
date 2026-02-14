@@ -390,7 +390,6 @@ class MazeGenerator():
             "                                                    "
             "By: @nel-adao, @mjabri"
         ]
-
         for s in print_list:
             print(s)
             time.sleep(0.05)

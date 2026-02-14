@@ -1,11 +1,11 @@
 # Maze configuration
 
-HEIGHT=20
-WIDTH=20
-ENTRY=0,0
-EXIT=20,20
-OUTPUT_FILE=maze.txt
+HEIGHT = 20
+WIDTH = 20
+ENTRY = 0,0
+EXIT = 20,20
+OUTPUT_FILE = output_maze.txt
 
-PERFECT=False
-SEED=False
-ALGO=PRIM
+PERFECT = False
+SEED = False
+ALGO = PRIM
