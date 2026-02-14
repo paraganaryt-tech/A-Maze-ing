@@ -11,7 +11,6 @@ if __name__ == "__main__":
         exit()
 
     config = mazegen.ft_get_config(file_name)
-    print(config)
     maze = mazegen.MazeGenerator(config)
     tmp_maze = maze.ft_run()
 

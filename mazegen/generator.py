@@ -57,7 +57,6 @@ class MazeGenerator():
                 print(maze_str)
             time.sleep(0.05)
             if h == end_h * 2 + 1 and w == end_w * 2 + 1:
-                # time.sleep(1)
                 break
             directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
             for dh, dw in directions:
@@ -153,15 +152,14 @@ class MazeGenerator():
         return visited
 
     def perfect_path(self, tmp_maze: list):
-        i = 1
-        rd = random.randint(0, len(tmp_maze) - 1)
-        if rd % 2 == 0:
-            if rd > 4:
-                rd -= 1
-            else:
-                rd += 1
+        i = random.randint(1, self.width)
+        print(i)
+        rnd_list = [(self.entry[0]*2)+1, (self.exit_p[0]*2)+1]
+        rd = random.choice(rnd_list)
+        print(rd)
         while i < len(tmp_maze[rd]):
             if tmp_maze[rd][i] == "#":
+                print(i)
                 tmp_maze[rd][i] = " "
                 break
             i += 1
@@ -259,7 +257,7 @@ class MazeGenerator():
                 continue
         print(self.perfect)
         if not self.perfect:
-            os.system("clear")
+            # os.system("clear")
             self.perfect_path(tmp_maze)
             self.print_maze(tmp_maze)
         self.ft_output_file(tmp_maze)
@@ -305,8 +303,9 @@ class MazeGenerator():
                     elif ex.lower() == "n":
                         break
                 continue
-        if self.perfect:
-            os.system("clear")
+        print(self.perfect)
+        if not self.perfect:
+            # os.system("clear")
             self.perfect_path(tmp_maze)
             self.print_maze(tmp_maze)
         self.ft_output_file(tmp_maze)

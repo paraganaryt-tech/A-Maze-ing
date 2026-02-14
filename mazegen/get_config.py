@@ -25,7 +25,7 @@ def ft_get_config(file_name):
         for item in config_list:
             item_list.append(item.split("="))
             try:
-                item_list[i][0] = item_list[i][0].upper().strip(" ")
+                item_list[i][0] = item_list[i][0].strip(" ")
                 item_list[i][1] = item_list[i][1].strip(" ")
             except Exception:
                 continue
@@ -41,43 +41,43 @@ def ft_get_config(file_name):
         validation_list = []
         for item in item_list:
 
-            if item[0] == "WIDTH":
+            if item[0].strip(" ") == "WIDTH":
                 c_dic['WIDTH'] = int(item[1])
                 validation_list.append("WIDTH")
 
-            elif item[0] == "HEIGHT":
+            elif item[0].strip(" ") == "HEIGHT":
                 c_dic['HEIGHT'] = int(item[1])
                 validation_list.append("HEIGHT")
 
-            elif item[0] == "ENTRY":
+            elif item[0].strip(" ") == "ENTRY":
                 c_dic['ENTRY'] = item[1].split(",")
                 c_dic['ENTRY'][0] = int(c_dic['ENTRY'][0])
                 c_dic['ENTRY'][1] = int(c_dic['ENTRY'][1])
                 validation_list.append("ENTRY")
 
-            elif item[0] == "EXIT":
+            elif item[0].strip(" ") == "EXIT":
                 c_dic['EXIT'] = item[1].split(",")
-                c_dic['EXIT'][0] = int(c_dic['EXIT'][0])
-                c_dic['EXIT'][1] = int(c_dic['EXIT'][1])
+                c_dic['EXIT'][0] = int(c_dic['EXIT'][0]) - 1
+                c_dic['EXIT'][1] = int(c_dic['EXIT'][1]) - 1
                 validation_list.append("EXIT")
 
-            elif item[0] == "OUTPUT_FILE":
-                c_dic['OUTPUT_FILE'] = item[1]
+            elif item[0].strip(" ") == "OUTPUT_FILE":
+                c_dic['OUTPUT_FILE'] = item[1].strip(" ")
                 validation_list.append("OUTPUT_FILE")
 
-            elif item[0] == "PERFECT":
+            elif item[0].strip(" ") == "PERFECT":
                 validation_list.append("PERFECT")
-                if item[1].upper() == "TRUE":
+                if item[1].strip(" ").upper() == "TRUE":
                     c_dic['PERFECT'] = True
-                elif item[1].upper() == "FALSE":
+                elif item[1].strip(" ").upper() == "FALSE":
                     c_dic['PERFECT'] = False
 
-            elif item[0] == "SEED":
-                if item[1].upper() == "TRUE":
+            elif item[0].strip(" ") == "SEED":
+                if item[1].strip(" ").upper() == "TRUE":
                     c_dic["SEED"] = True
 
-            elif item[0] == "ALGO":
-                if item[1].upper() == "PRIM":
+            elif item[0].strip(" ") == "ALGO":
+                if item[1].strip(" ").upper() == "PRIM":
                     c_dic["ALGO"] = 0
 
         if c_dic["ENTRY"][0] < 0:
