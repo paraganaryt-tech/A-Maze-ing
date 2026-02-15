@@ -24,15 +24,6 @@ class MazeGenerator():
                 for x in range(len(tmp_maze[0])):
                     visited[y].append(False)
             stack = [[[start_h * 2 + 1, start_w * 2 + 1]]]
-            colors = {
-                "BLACK_BG": "\033[40m",
-                "WHITE_BG": "\033[47m",
-                "GREEN_BG": "\033[42m",
-                "BL_BG": "\033[44m",
-                "AMM_BG": "\033[45m",
-                "RED_BG": "\033[41m"
-            }
-            RESET = "\033[0m"
         except BaseException:
             print('Wrong cordinates')
             exit()
@@ -43,24 +34,6 @@ class MazeGenerator():
                 if visited[h][w]:
                     continue
                 visited[h][w] = True
-                os.system("clear")
-                for y in range(len(tmp_maze)):
-                    maze_str = ""
-                    for x in range(len(tmp_maze[0])):
-                        if [y, x] in current_path:
-                            maze_str += f'{colors["GREEN_BG"]}  {RESET}'
-                        elif tmp_maze[y][x] == "#":
-                            maze_str += f'{colors["WHITE_BG"]}  {RESET}'
-                        elif tmp_maze[y][x] == "@":
-                            maze_str += f'{colors["AMM_BG"]}  {RESET}'
-                        elif y == start_h * 2 + 1 and x == start_w * 2 + 1:
-                            maze_str += f'{colors["GREEN_BG"]}  {RESET}'
-                        elif y == end_h * 2 + 1 and x == end_w * 2 + 1:
-                            maze_str += f'{colors["RED_BG"]}  {RESET}'
-                        else:
-                            maze_str += f'{colors["BLACK_BG"]}  {RESET}'
-                    print(maze_str)
-                time.sleep(0.0001)
                 if h == end_h * 2 + 1 and w == end_w * 2 + 1:
                     break
                 directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
@@ -389,6 +362,8 @@ class MazeGenerator():
                 self.maze_generater_dfs(tmp_maze, is_visited)
             else:
                 self.maze_generater_prim(tmp_maze, is_visited)
+            self.pathing(tmp_maze)
+            print(self.path)
             self.maze_base = tmp_maze
         except BaseException:
             exit()
