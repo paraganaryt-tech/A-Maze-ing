@@ -1,7 +1,7 @@
 # Maze configuration
 
-HEIGHT = 9
-WIDTH = 9
+HEIGHT = 20
+WIDTH = 20
 ENTRY = 0,0
 EXIT = 9,9
 OUTPUT_FILE = output_file.txt
