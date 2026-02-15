@@ -1,11 +1,11 @@
 # Maze configuration
 
 HEIGHT = 20
-WIDTH = 20
-ENTRY = 0,0
-EXIT = 19,19
+WIDTH = 15
+ENTRY = 10,10
+EXIT = 10,10
 OUTPUT_FILE = output_maze.txt
 
-PERFECT = False
+PERFECT = True
 SEED = False
-ALGO = PRIM
+ALGO = DFS

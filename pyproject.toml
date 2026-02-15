@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mazegen"
+version = "1.0.0"
+description = "A maze generator module for 42"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "mjabri", email = "mjabri@student.1337.ma" },
+     { name = "nel-adao", email = "nel-adao@student.1337.ma" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mazegen*"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+disallow_untyped_defs = true
+check_untyped_defs = true

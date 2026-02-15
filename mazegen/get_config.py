@@ -1,100 +1,72 @@
-def ft_exit(error_str):
+import sys
+from typing import Dict, List, Any
+
+
+def ft_exit(error_str: str) -> None:
     print(f"Error: {error_str}")
-    exit(1)
+    sys.exit(1)
 
 
-def ft_get_config(file_name):
+def ft_get_config(file_name: str) -> Dict[str, Any]:
     try:
         try:
-            file = open(file_name, "r")
-            all_config = file.read()
-            file.close()
-        except Exception:
+            with open(file_name, "r") as file:
+                lines = file.readlines()
+        except OSError:
             ft_exit("Sorry Can't Open File")
 
-        config_list = []
-        for line in all_config.splitlines():
-            if "#" not in line and "=" in line:
-                config_list.append(line)
-            else:
-                tmp_spt = line.split("#")
-                config_list.append(tmp_spt[0])
-
-        item_list = []
-        i = 0
-        for item in config_list:
-            item_list.append(item.split("="))
-            try:
-                item_list[i][0] = item_list[i][0].strip(" ")
-                item_list[i][1] = item_list[i][1].strip(" ")
-            except Exception:
-                continue
-            i += 1
-
-        c_dic = {
+        c_dic: Dict[str, Any] = {
             "WIDTH": 20, "HEIGHT": 20,
             "ENTRY": [0, 0], "EXIT": [20, 20],
             "OUTPUT_FILE": "output_maze.txt", "PERFECT": True,
             "SEED": False, "ALGO": 1
-            }
+        }
 
-        validation_list = []
-        for item in item_list:
+        for line in lines:
+            line = line.split("#")[0].strip()
+            if not line or "=" not in line:
+                continue
 
-            if item[0].strip(" ") == "WIDTH":
-                c_dic['WIDTH'] = int(item[1])
-                validation_list.append("WIDTH")
+            key, value = line.split("=", 1)
+            key = key.strip().upper()
+            val = value.strip()
 
-            elif item[0].strip(" ") == "HEIGHT":
-                c_dic['HEIGHT'] = int(item[1])
-                validation_list.append("HEIGHT")
-
-            elif item[0].strip(" ") == "ENTRY":
-                c_dic['ENTRY'] = item[1].split(",")
-                c_dic['ENTRY'][0] = int(c_dic['ENTRY'][0])
-                c_dic['ENTRY'][1] = int(c_dic['ENTRY'][1])
-                validation_list.append("ENTRY")
-
-            elif item[0].strip(" ") == "EXIT":
-                c_dic['EXIT'] = item[1].split(",")
-                c_dic['EXIT'][0] = int(c_dic['EXIT'][0]) - 1
-                c_dic['EXIT'][1] = int(c_dic['EXIT'][1]) - 1
-                validation_list.append("EXIT")
-
-            elif item[0].strip(" ") == "OUTPUT_FILE":
-                c_dic['OUTPUT_FILE'] = item[1].strip(" ")
-                validation_list.append("OUTPUT_FILE")
-
-            elif item[0].strip(" ") == "PERFECT":
-                validation_list.append("PERFECT")
-                if item[1].strip(" ").upper() == "TRUE":
-                    c_dic['PERFECT'] = True
-                elif item[1].strip(" ").upper() == "FALSE":
-                    c_dic['PERFECT'] = False
-
-            elif item[0].strip(" ") == "SEED":
-                if item[1].strip(" ").upper() == "TRUE":
-                    c_dic["SEED"] = True
-
-            elif item[0].strip(" ") == "ALGO":
-                if item[1].strip(" ").upper() == "PRIM":
+            if key == "WIDTH":
+                c_dic['WIDTH'] = int(val)
+            elif key == "HEIGHT":
+                c_dic['HEIGHT'] = int(val)
+            elif key == "ENTRY":
+                coords = val.split(",")
+                c_dic['ENTRY'] = [int(coords[0]), int(coords[1])]
+            elif key == "EXIT":
+                coords = val.split(",")
+                c_dic['EXIT'] = [int(coords[0]), int(coords[1])]
+            elif key == "OUTPUT_FILE":
+                c_dic['OUTPUT_FILE'] = val
+            elif key == "PERFECT":
+                c_dic['PERFECT'] = (val.upper() == "TRUE")
+            elif key == "SEED":
+                c_dic["SEED"] = (val.upper() == "TRUE")
+            elif key == "ALGO":
+                if val.upper() == "PRIM":
                     c_dic["ALGO"] = 0
-
-        if c_dic["ENTRY"][0] < 0:
-            c_dic["ENTRY"][0] = 0
-
-        if c_dic["ENTRY"][1] < 0:
-            c_dic["ENTRY"][1] = 0
-
-        if c_dic["EXIT"][1] >= c_dic["WIDTH"]:
-            c_dic["EXIT"][1] = c_dic["WIDTH"] - 1
-
-        if c_dic["EXIT"][0] >= c_dic["HEIGHT"]:
-            c_dic["EXIT"][0] = c_dic["HEIGHT"] - 1
+                else:
+                    c_dic["ALGO"] = 1
 
         if c_dic["WIDTH"] <= 0 or c_dic["HEIGHT"] <= 0:
-            raise ValueError
+            raise ValueError("Dimensions must be positive")
+
+        w, h = c_dic["WIDTH"], c_dic["HEIGHT"]
+        c_dic["ENTRY"][0] = max(0, min(c_dic["ENTRY"][0], h - 1))
+        c_dic["ENTRY"][1] = max(0, min(c_dic["ENTRY"][1], w - 1))
+        c_dic["EXIT"][0] = max(0, min(c_dic["EXIT"][0], h - 1))
+        c_dic["EXIT"][1] = max(0, min(c_dic["EXIT"][1], w - 1))
 
         return c_dic
+
+    except ValueError as e:
+        ft_exit(f"Config Error: {e}")
+        return {}
     except Exception as e:
-        ft_exit(f"Sorry Somthing wrong pleas check your config :{e}")
+        ft_exit(f"Unexpected Error: {e}")
+        return {}
