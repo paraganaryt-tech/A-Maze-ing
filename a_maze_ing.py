@@ -37,7 +37,7 @@ if __name__ == "__main__":
                 maze.amazing_gen(1)
             elif choice == 2:
                 os.system("clear")
-                maze.test_path_blue(maze.maze_base)
+                maze.pathing(maze.maze_base)
             elif choice == 3:
                 os.system("clear")
                 maze.change_colors(maze.maze_base)

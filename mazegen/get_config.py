@@ -1,5 +1,5 @@
 import sys
-from typing import Dict, List, Any
+from typing import Dict, Any
 
 
 def ft_exit(error_str: str) -> None:
@@ -12,7 +12,7 @@ def ft_get_config(file_name: str) -> Dict[str, Any]:
         try:
             with open(file_name, "r") as file:
                 lines = file.readlines()
-        except OSError:
+        except (OSError, PermissionError):
             ft_exit("Sorry Can't Open File")
 
         c_dic: Dict[str, Any] = {
@@ -61,6 +61,11 @@ def ft_get_config(file_name: str) -> Dict[str, Any]:
         c_dic["ENTRY"][1] = max(0, min(c_dic["ENTRY"][1], w - 1))
         c_dic["EXIT"][0] = max(0, min(c_dic["EXIT"][0], h - 1))
         c_dic["EXIT"][1] = max(0, min(c_dic["EXIT"][1], w - 1))
+
+        entry_cordt = (c_dic["ENTRY"][0], c_dic["ENTRY"][1])
+        exit_cordt = (c_dic["EXIT"][0], c_dic["EXIT"][1])
+        if entry_cordt == exit_cordt:
+            raise ValueError("Cordinates combined!")
 
         return c_dic
 

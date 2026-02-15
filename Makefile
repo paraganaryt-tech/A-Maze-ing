@@ -1,10 +1,10 @@
+run:
+	python3 a_maze_ing.py config.txt || true
+
 install:
 	pip install --upgrade pip
 	pip install build flake8 mypy
 	pip install -e .
-
-run:
-	python3 a_maze_ing.py config.txt
 
 debug:
 	python3 -m pdb a_maze_ing.py config.txt

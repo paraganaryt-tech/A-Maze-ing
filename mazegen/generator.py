@@ -14,7 +14,7 @@ class MazeGenerator():
         self.seed = config["SEED"]
         self.algo = config["ALGO"]
 
-    def test_path_blue(self, tmp_maze):
+    def pathing(self, tmp_maze):
         try:
             start_h, start_w = self.entry[0], self.entry[1]
             end_h, end_w = self.exit_p[0], self.exit_p[1]
@@ -60,7 +60,7 @@ class MazeGenerator():
                         else:
                             maze_str += f'{colors["BLACK_BG"]}  {RESET}'
                     print(maze_str)
-                time.sleep(0.05)
+                time.sleep(0.0001)
                 if h == end_h * 2 + 1 and w == end_w * 2 + 1:
                     break
                 directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
@@ -71,6 +71,7 @@ class MazeGenerator():
                             new_path = list(current_path)
                             new_path.append([nh, nw])
                             stack.append(new_path)
+            self.path = current_path
         except BaseException:
             exit()
 
@@ -253,7 +254,9 @@ class MazeGenerator():
 
                         next_w, next_h = random.choice(dir_n)
 
-                        self.open_path(place_w, place_h, next_w, next_h, tmp_maze)
+                        self.open_path(
+                            place_w, place_h, next_w, next_h, tmp_maze
+                                       )
 
                         is_visited[next_h][next_w] = True
 
@@ -261,7 +264,7 @@ class MazeGenerator():
 
                         os.system("clear")
                         self.print_maze(tmp_maze)
-                        time.sleep(0.05)
+                        # time.sleep(0.05)
                 except BaseException:
                     while 1:
                         ex = input("you want to exit ? (y/n): ")
@@ -344,20 +347,24 @@ class MazeGenerator():
                     o_list[h][w] -= S
 
         hex_list = ["A", "B", "C", "D", "E", "F"]
-        with open(self.out_file, "w") as o_file:
-            j = 0
-            i = 0
-            for h in o_list:
-                for w in o_list[j]:
-                    if w < 10:
-                        o_file.write(str(w))
-                    else:
-                        i = w - 9
-                        o_file.write(hex_list[i - 1])
-                o_file.write("\n")
-                j += 1
-            o_file.write(f"\n{str(self.entry[0])},{str(self.entry[1])}\n")
-            o_file.write(f"{str(self.exit_p[0])},{str(self.exit_p[1])}")
+        try:
+            with open(self.out_file, "w") as o_file:
+                j = 0
+                i = 0
+                for h in o_list:
+                    for w in o_list[j]:
+                        if w < 10:
+                            o_file.write(str(w))
+                        else:
+                            i = w - 9
+                            o_file.write(hex_list[i - 1])
+                    o_file.write("\n")
+                    j += 1
+                o_file.write(f"\n{str(self.entry[0])},{str(self.entry[1])}\n")
+                o_file.write(f"{str(self.exit_p[0])},{str(self.exit_p[1])}")
+        except FileNotFoundError:
+            print("\nERROR: Output file not found!")
+            exit()
 
     def amazing_gen(self):
         try:
@@ -392,20 +399,20 @@ class MazeGenerator():
             print("\n\n\n\n\n")
 
             print_list = [
-                "    █████╗    ███╗   ███╗ █████╗ ███████╗███████╗   ██╗███╗   ██╗"
-                " ██████╗ ",
+                "    █████╗    ███╗   ███╗ █████╗ ███████╗███████╗   ██╗███╗"
+                "   ██╗ ██████╗ ",
                 "   ██╔══██╗   ████╗ ████║██╔══██╗╚══███╔╝██╔════╝   ██║████╗"
                 "  ██║██╔════╝ ",
-                "   ███████║   ██╔████╔██║███████║  ███╔╝ █████╗     ██║██╔██╗ "
-                "██║██║  ███╗",
-                "   ██╔══██║   ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝     ██║██║╚██╗██"
-                "║██║   ██║",
+                "   ███████║   ██╔████╔██║███████║  ███╔╝ █████╗    "
+                " ██║██╔██╗ ██║██║  ███╗",
+                "   ██╔══██║   ██║╚██╔╝██║██╔══██║ ███╔╝  ██╔══╝     "
+                "██║██║╚██╗██║██║   ██║",
                 "   ██║  ██║   ██║ ╚═╝ ██║██║  ██║███████╗███████╗   ██║██║ "
                 "╚████║╚██████╔╝",
                 "   ╚═╝  ╚═╝   ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝╚═╝"
                 "  ╚═══╝ ╚═════╝ ",
                 "                                                    "
-                "By: @nel-adao, @mjabri"
+                "By: Boss: @nel-adao, @mjabri"
             ]
             for s in print_list:
                 print(s)
