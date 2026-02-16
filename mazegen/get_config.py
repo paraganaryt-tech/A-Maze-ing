@@ -3,11 +3,17 @@ from typing import Dict, Any
 
 
 def ft_exit(error_str: str) -> None:
+    """
+    Prints error and exits.
+    """
     print(f"Error: {error_str}")
     sys.exit(1)
 
 
 def ft_get_config(file_name: str) -> Dict[str, Any]:
+    """
+    Parses config file.
+    """
     try:
         try:
             with open(file_name, "r") as file:

@@ -8,4 +8,4 @@ OUTPUT_FILE = output_file.txt
 
 PERFECT = TruE
 SEED = False
-ALGO = PRIM
+ALGO = dfs

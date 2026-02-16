@@ -1,3 +1,6 @@
+"""
+Main program entry point.
+"""
 import mazegen
 import sys
 import os
@@ -23,7 +26,7 @@ if __name__ == "__main__":
             print("4) Quit")
             while 1:
                 try:
-                    choice = int(input("Choice? (1-4):"))
+                    choice: int = int(input("Choice? (1-4):"))
                     if choice < 1 or choice > 4:
                         raise ValueError
                     break

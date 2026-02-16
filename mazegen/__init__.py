@@ -1,3 +1,6 @@
+"""
+Maze generation package.
+"""
 from .generator import MazeGenerator
 from .get_config import ft_get_config
 
