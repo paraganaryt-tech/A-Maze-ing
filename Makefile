@@ -19,8 +19,8 @@ clean:
 	rm -f output_maze.txt
 
 lint:
-	flake8 .
-	mypy .
+	python3 -m flake8 .
+	python3 -m mypy .
 
 build:
 	python3 -m build

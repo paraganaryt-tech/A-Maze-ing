@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     config = mazegen.ft_get_config(file_name)
     maze = mazegen.MazeGenerator(config)
-    tmp_maze = maze.ft_run()
+    maze.ft_run()
 
     while 1:
         try:
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         try:
             if choice == 1:
                 os.system("clear")
-                maze.amazing_gen(1)
+                maze.amazing_gen()
             elif choice == 2:
                 os.system("clear")
                 maze.pathing(maze.maze_base)

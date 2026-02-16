@@ -30,7 +30,7 @@ class MazeGenerator:
             os.system("clear")
             print("\n\n\n\n\n")
 
-            print_list = [
+            print_list: list = [
                 "    █████╗    ███╗   ███╗ █████╗ ███████╗███████╗   ██╗███╗"
                 "   ██╗ ██████╗ ",
                 "   ██╔══██╗   ████╗ ████║██╔══██╗╚══███╔╝██╔════╝   ██║████╗"
@@ -457,7 +457,7 @@ class MazeGenerator:
         try:
             start_h, start_w = self.entry[0], self.entry[1]
             end_h, end_w = self.exit_p[0], self.exit_p[1]
-            visited = []
+            visited: list = []
             for y in range(len(tmp_maze)):
                 visited.append([])
                 for x in range(len(tmp_maze[0])):
