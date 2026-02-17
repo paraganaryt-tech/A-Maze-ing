@@ -1,0 +1,12 @@
+# Maze configuration
+
+HEIGHT = 15
+WIDTH = 15
+ENTRY = 0,0
+EXIT = 14,14
+OUTPUT_FILE = hell.txt
+
+ALGO = DFS
+
+ALGO = prim
+PERFECT = TRUE
